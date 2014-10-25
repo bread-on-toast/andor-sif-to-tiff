@@ -12,6 +12,9 @@ x=0
 y=0
 num=0
 a=[]
+lines=1535
+rows=2047
+
 with open("img") as f:
 	px=0
 	add=0
@@ -43,6 +46,13 @@ with open("img") as f:
 				px=1
 				add=1
 
+
+import numpy as np
+import Image
+
+data = np.random.randint(0, 255, (10,10)).astype(np.uint8)
+im = Image.fromarray(data)
+im.save('test.tif')
 
 #import numpy as np
 
