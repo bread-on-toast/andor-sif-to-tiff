@@ -4,9 +4,6 @@
 
 import numpy as np
 
-def autocorr(x):
-    result = np.correlate(x, x, mode='full')
-    return result[result.size/2:]
 
 x=0
 y=0
@@ -16,43 +13,36 @@ lines=1535
 rows=2047
 data=[]
 row=[]
+file=""
 with open("img") as f:
-	px=0
-	add=0
 	for i in f:
-		line=i.split(" ")
-		for word in line:
-			if px==1 and add==0:
-				num=num+1
-				px=0
-				row.append(int(word,16))
-#				print y,x,(int(word,16)/2**11)
-				y=y+1
-				if y==1536:#6 #1600+64 somehow
-					data.append(row)
-					row=[]
-					y=0
-					x=x+1
-			if px==1 and add==1:
-				add=0
-                                num=num+1
-                                px=0
-                                row.append(int("1"+word,16))
-                                #print y,x,(int("1"+word,16)/2**11)
-                                y=y+1
-                                if y==1536:#6 #1600+64 somehow
-                                        data.append(row)
-                                        row=[]
-					y=0
-                                        x=x+1
+		file=file+i
+#print file
 
-			if word=="0044": px=1
-			if  word=="0045":
-				px=1
-				add=1
+file=file.replace("\n"," ").split(" ")
+rawdata=[]
+for i in file:
+	if len(i)==4:
+		rawdata.append(i)
 
+pos=0
+while rawdata[pos]!="0044":
+	pos=pos+1
+pos=pos-1
+y=0
+while pos<len(rawdata)-1:
+	px=int(rawdata[pos],16)
+	bit=rawdata[pos+1]
+	if bit=="0045":
+		px=px+2**16
 
-
+	row.append(px)
+	if len(row)==1536*4/3:
+		data.append(row)
+#		print "row"
+		row=[]
+	pos=pos+2
+#print data
 
 print "P2"
 print len(data[0]),len(data),
@@ -61,5 +51,5 @@ print 2**16-1
 for i in data:
 	line=""
 	for j in i:
-		line=line+str(j/2)+" "
+		line=line+str(j)+" "
 	print line
