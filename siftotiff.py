@@ -9,8 +9,7 @@ x=0
 y=0
 num=0
 a=[]
-lines=1535
-rows=2047
+rows=2048 # set according to your detector
 data=[]
 row=[]
 file=""
@@ -37,7 +36,7 @@ while pos<len(rawdata)-1:
 		px=px+2**16
 
 	row.append(px)
-	if len(row)==1536*4/3:
+	if len(row)==rows:
 		data.append(row)
 #		print "row"
 		row=[]
