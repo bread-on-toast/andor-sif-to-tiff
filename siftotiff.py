@@ -3,7 +3,16 @@
 #use hexdump to create an input-file
 
 import numpy as np
+from optparse import OptionParser
 
+parser = OptionParser()
+parser.add_option("-f", "--file", dest="filename",
+                  help="inputfilename", metavar="FILE")
+
+(options, args) = parser.parse_args()
+
+filename=options.filename
+#print args
 
 x=0
 y=0
@@ -13,7 +22,7 @@ rows=2048 # set according to your detector
 data=[]
 row=[]
 file=""
-with open("img") as f:
+with open(filename) as f:
 	for i in f:
 		file=file+i
 #print file
@@ -42,7 +51,7 @@ while pos<len(rawdata)-1:
 		row=[]
 	pos=pos+2
 #print data
-f = open("img.pgm", "wb")
+f = open(filename+".pgm", "w")
 
 f.write("P2\n")
 f.write(str(len(data[0]))+" "+str(len(data))+" "+str(2**16-1)+"\n")
