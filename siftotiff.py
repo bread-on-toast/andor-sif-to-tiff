@@ -4,6 +4,7 @@
 
 import numpy as np
 from optparse import OptionParser
+import os as os
 
 parser = OptionParser()
 parser.add_option("-f", "--file", dest="filename",
@@ -22,10 +23,12 @@ rows=2048 # set according to your detector
 data=[]
 row=[]
 file=""
-with open(filename) as f:
+os.system("hexdump "+filename+">"+filename+".tmp")
+with open(filename+".tmp") as f:
 	for i in f:
 		file=file+i
-#print file
+os.system("rm "+filename+".tmp")#print file
+
 
 file=file.replace("\n"," ").split(" ")
 rawdata=[]
